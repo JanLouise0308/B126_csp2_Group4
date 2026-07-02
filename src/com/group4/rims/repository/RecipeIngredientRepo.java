@@ -1,14 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.group4.rims.repository;
 
-/**
- *
- * @author Louise
- */
-public class RecipeIngredientRepo {
-    
+import com.group4.rims.model.RecipeIngredient;
+import java.util.List;
+
+public interface RecipeIngredientRepo {
+    RecipeIngredient findById(int id);
+    List<RecipeIngredient> findAll();
+    public abstract void save(RecipeIngredient recipeIngredient);
+    public abstract void update(RecipeIngredient recipeIngredient);
+    public abstract void delete(int id);
+
+    List<RecipeIngredient> findByMenuId(int menuId);
+    List<RecipeIngredient> findByIngredientId(int ingredientId);
 }

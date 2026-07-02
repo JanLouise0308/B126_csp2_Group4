@@ -1,14 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.group4.rims.repository;
 
-/**
- *
- * @author Louise
- */
-public class InventoryTransactionRepo {
-    
+import com.group4.rims.model.InventoryTransaction;
+import java.util.List;
+
+public interface InventoryTransactionRepo {
+    InventoryTransaction findById(int id);
+    List<InventoryTransaction> findAll();
+    public abstract void save(InventoryTransaction transaction);
+    public abstract void update(InventoryTransaction transaction);
+    public abstract void delete(int id);
+
+    List<InventoryTransaction> findByIngredientId(int ingredientId);
+    List<InventoryTransaction> findByStaffId(int staffId);
 }

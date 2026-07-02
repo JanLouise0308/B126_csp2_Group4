@@ -1,14 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.group4.rims.repository;
 
-/**
- *
- * @author Louise
- */
-public class SupplierRepo {
-    
+import com.group4.rims.model.Supplier;
+import java.util.List;
+
+public interface SupplierRepo {
+    Supplier findById(int id);
+    List<Supplier> findAll();
+    public abstract void save(Supplier supplier);
+    public abstract void update(Supplier supplier);
+    public abstract void delete(int id);
 }

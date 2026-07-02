@@ -1,14 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.group4.rims.repository;
 
-/**
- *
- * @author Louise
- */
-public class StaffRepo {
-    
+import com.group4.rims.model.StaffUser;
+import java.util.List;
+
+public interface StaffRepo {
+    StaffUser findById(int id);
+    List<StaffUser> findAll();
+    public abstract void save(StaffUser staff);
+    public abstract void update(StaffUser staff);
+    public abstract void delete(int id);
+
+    StaffUser findByUsername(String username);
 }
