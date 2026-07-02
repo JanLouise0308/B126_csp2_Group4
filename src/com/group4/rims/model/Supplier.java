@@ -39,7 +39,7 @@ public class Supplier {
         return contactNumber;
     }
 
-    public void setContactNUmber(String contactNumber) {
+    public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
 
