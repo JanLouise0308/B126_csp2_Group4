@@ -10,7 +10,8 @@ public class Supplier {
     public Supplier() {
     }
 
-    public Supplier(int supplierId, String supplierName, String contactNumber, String address) {
+    public Supplier(int supplierId, String supplierName, 
+                    String contactNumber, String address) {
 
         this.supplierId = supplierId;
         this.supplierName = supplierName;
@@ -35,7 +36,7 @@ public class Supplier {
     }
 
     public String getContactNumber() {
-        return contactNumber = contactNumber;
+        return contactNumber;
     }
 
     public void setContactNUmber(String contactNumber) {

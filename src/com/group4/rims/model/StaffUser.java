@@ -35,7 +35,7 @@ public class StaffUser {
         return userName;
     }
 
-    public void setUserName(String UserName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
