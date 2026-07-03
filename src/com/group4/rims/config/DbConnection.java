@@ -1,8 +1,8 @@
-
 package com.group4.rims.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class DbConnection {
 
@@ -10,12 +10,18 @@ public class DbConnection {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
 
+    private DbConnection() {
+    }
+
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+    }
+
     public static void main(String[] args) {
-        try {
-            Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("Connected Sucessfully!");
-        } catch (Exception e) {
-            System.out.println(e);
+        try (Connection conn = getConnection()) {
+            System.out.println("Connected Successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
