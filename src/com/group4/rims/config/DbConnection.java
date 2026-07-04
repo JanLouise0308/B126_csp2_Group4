@@ -11,7 +11,6 @@ public class DbConnection {
     private static final String PASSWORD = "";
 
     public static Connection connect() {
-   
         try {
             return getConnection();
         } catch (SQLException e) {
@@ -19,6 +18,7 @@ public class DbConnection {
             return null;
         }
     }
+
 
     private DbConnection() {
     }

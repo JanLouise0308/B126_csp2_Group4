@@ -1,15 +1,9 @@
 package com.group4.rims.repository;
 
 import com.group4.rims.model.StaffUser;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 
@@ -22,7 +16,7 @@ public class StaffRepoImpl implements StaffRepo {
 
     @Override
     public StaffUser findById(int id) {
-        String query = "SELECT * FROM staff WHERE staff_id=?";
+        String query = "SELECT * FROM staff_users WHERE staff_id=?";
         try (PreparedStatement stmnt = connection.prepareStatement(query)) {
             stmnt.setInt(1, id);
             ResultSet rs = stmnt.executeQuery();
@@ -44,7 +38,7 @@ public class StaffRepoImpl implements StaffRepo {
 
     @Override
     public void save(StaffUser staff) {
-        String query = "INSERT INTO staff (username, password, full_name, role) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO staff_users (username, password, full_name, role) VALUES (?, ?, ?, ?)";
         String hashedPassword = BCrypt.hashpw(staff.getPassword(), BCrypt.gensalt());
         try (PreparedStatement stmnt = connection.prepareStatement(query)) {
             stmnt.setString(1, staff.getUserName());
@@ -57,20 +51,25 @@ public class StaffRepoImpl implements StaffRepo {
 
     @Override
     public void update(StaffUser staff) {
-        String query = "UPDATE staff SET username=?, password=?, full_name=?, role=? WHERE staff_id=?";
+        String query = "UPDATE staff_users SET username=?, password=?, full_name=?, role=? WHERE staff_id=?";
+        
+        String hashedPassword = BCrypt.hashpw(staff.getPassword(), BCrypt.gensalt());
+
         try (PreparedStatement stmnt = connection.prepareStatement(query)) {
             stmnt.setString(1, staff.getUserName());
-            stmnt.setString(2, staff.getPassword());
+            stmnt.setString(2, hashedPassword);
             stmnt.setString(3, staff.getFullName());
             stmnt.setString(4, staff.getRole());
             stmnt.setInt(5, staff.getStaffId());
             stmnt.executeUpdate();
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void delete(int id) {
-        String query = "DELETE FROM staff WHERE staff_id=?";
+        String query = "DELETE FROM staff_users WHERE staff_id=?";
         try (PreparedStatement stmnt = connection.prepareStatement(query)) {
             stmnt.setInt(1, id);
             stmnt.executeUpdate();
@@ -79,7 +78,7 @@ public class StaffRepoImpl implements StaffRepo {
 
     @Override
     public StaffUser findByUsername(String username) {
-        String query = "SELECT * FROM staff WHERE username=?";
+        String query = "SELECT * FROM staff_users WHERE username=?";
         try (PreparedStatement stmnt = connection.prepareStatement(query)) {
             stmnt.setString(1, username);
             ResultSet rs = stmnt.executeQuery();
@@ -92,7 +91,7 @@ public class StaffRepoImpl implements StaffRepo {
         List<Map<String, Object>> results = new ArrayList<>();
         String query = "SELECT s.staff_id, s.full_name, s.role, " +
                        "t.transaction_id, t.transaction_type, t.quantity " +
-                       "FROM staff s " +
+                       "FROM staff_users s " +
                        "JOIN inventory_transactions t ON s.staff_id = t.staff_id";
         try (Statement stmnt = connection.createStatement();
              ResultSet rs = stmnt.executeQuery(query)) {

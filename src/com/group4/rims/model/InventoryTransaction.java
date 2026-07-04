@@ -8,7 +8,7 @@ public class InventoryTransaction {
     private int staffId;
     private String transactionType;
     private int quantity;
-    private int transactionDate;
+    private String transactionDate;
     private String remarks;
     
     public InventoryTransaction (){
@@ -16,7 +16,7 @@ public class InventoryTransaction {
     }
 
     public InventoryTransaction(int transactionId, int ingredientId, int staffId, 
-                                String transactionType, int quantity, int transactionDate, 
+                                String transactionType, int quantity, String transactionDate, 
                                 String remarks) {
         
         this.transactionId = transactionId;
@@ -68,11 +68,11 @@ public class InventoryTransaction {
         this.quantity = quantity;
     }
 
-    public int getTransactionDate() {
+    public String getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(int transactionDate) {
+    public void setTransactionDate(String transactionDate) {
         this.transactionDate = transactionDate;
     }
 

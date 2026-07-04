@@ -24,36 +24,39 @@ public class Main {
             System.out.println("[SYSTEM] Database handshake successful with local XAMPP engine.");
             System.out.println("[SYSTEM] Booting RIMS Operational Framework environment...\n");
 
-            // 2. Data Persistence Layers Instantiation (Repositories)
+            // 2. Repositories
             IngredientRepo ingredientRepo = new IngredientRepoImpl(connection);
             MenuItemRepo menuItemRepo = new MenuItemRepoImpl(connection);
             RecipeIngredientRepo recipeRepo = new RecipeIngredientRepoImpl(connection);
             StaffRepo staffRepo = new StaffRepoImpl(connection);
             SupplierRepo supplierRepo = new SupplierRepoImpl(connection);
+            InventoryTransactionRepo inventoryRepo = new InventoryTransactionRepoImpl(connection);
+            InventoryService inventoryService = new InventoryService(inventoryRepo);
+            InventoryController inventoryController = new InventoryController(inventoryService);
 
-            // 3. Business Policy Layers Instantiation (Services)
+            // 3. Services
             IngredientService ingredientService = new IngredientService(ingredientRepo);
             MenuItemService menuItemService = new MenuItemService(menuItemRepo);
             RecipeIngredientService recipeService = new RecipeIngredientService(recipeRepo);
             StaffService staffService = new StaffService(staffRepo);
             SupplierService supplierService = new SupplierService(supplierRepo);
 
-            // 4. Coordination Routing Intermediaries Instantiation (Controllers)
+            // 4. Controllers
             IngredientController ingredientController = new IngredientController(ingredientService);
             MenuItemController menuItemController = new MenuItemController(menuItemService);
             RecipeIngredientController recipeController = new RecipeIngredientController(recipeService);
             StaffController staffController = new StaffController(staffService);
             SupplierController supplierController = new SupplierController(supplierService);
 
-            // 5. Interface Layout Elements Instantiation (Views)
+            // 5. Views
             IngredientView ingredientView = new IngredientView(ingredientController, scanner);
-            InventoryView inventoryView = new InventoryView(ingredientController, scanner);
+            InventoryView inventoryView = new InventoryView(ingredientController, inventoryController, scanner);
             MenuItemView menuitemView = new MenuItemView(menuItemController, scanner);
             RecipeIngredientView recipeView = new RecipeIngredientView(recipeController, scanner);
             StaffView staffView = new StaffView(staffController, scanner);
             SupplierView supplierView = new SupplierView(supplierController, scanner);
 
-            // 6. Assemble and Fire Central Navigation Console Engine
+
             Dashboard dashboard = new Dashboard(
                     ingredientView,
                     inventoryView,
@@ -71,7 +74,7 @@ public class Main {
             System.err.println("Diagnostic Stack Trace Message: " + e.getMessage());
             System.err.println("Remedy: Double-check if your XAMPP Apache and MySQL service flags are green.");
         } finally {
-            // 7. Resource Allocation Drop Control
+            //  Resource Allocation Drop Control
             System.out.println("\n[SYSTEM] Disengaging application layer runtimes...");
             if (scanner != null) {
                 scanner.close();
